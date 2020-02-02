@@ -1,25 +1,31 @@
 #include <iostream>
 #include <cstdlib>
 #include <iomanip>
-#ifndef CONTAINER_H
-#define CONTAINER_H
+#include "runtime.h"
+#include "MyTime.h"
+#ifndef RUNJOURNAL_H
+#define RUNJOURNAL_H
 
-class Container
+class RunJournal
 {
+    
     public:
+    RunJournal(){
+        used = 0;
+    }
     static const size_t CAPACITY = 200;
-    Container(size_t)
+    RunJournal(size_t)
      {used = 0;}
-    void record();
-    void remove(double target);
-    void display(ostream& outs);
+    void record(Runtime tmp);
+    void find_remove(Runtime tmp);
+    void display();
     void time_sort();
     void distance_sort();
     void distance_view(double dist);
-    void total_time();
-    void total_distance();
-    void average_pace();
-    void save(ofs);
+    MyTime total_time();
+    double total_distance();
+    double average_pace();
+    void save(std::ostream& ofs);
 
 
 
@@ -32,8 +38,5 @@ class Container
 
 
 };
-std::ostream& operator <<(ostream& outs, const Runtime& r){
-    r.output(outs);
-    return outs;
-}
+
 #endif

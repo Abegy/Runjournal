@@ -1,5 +1,6 @@
 // The implementation file for the runtime class
 #include "runtime.h"
+#include "MyTime.h"
 #include <cstdlib>
 #include <iostream>
 #include <iomanip>
@@ -13,64 +14,75 @@ Runtime::Runtime(){
 
 Runtime Runtime::operator +(const Runtime& rhs)const{
     Runtime tmp;
-    tmp.rtime = rtime + rhs;
-    tmp.distance = distance + rhs;
+    tmp.rtime = rtime + rhs.rtime;
+    tmp.distance = distance + rhs.distance;
     return tmp;
 }
 
 Runtime Runtime::operator -(const Runtime& rhs)const{
     Runtime tmp;
-    tmp.rtime = rtime - rhs;
-    tmp.distance = distance - rhs;
+    tmp.rtime = rtime - rhs.rtime;
+    tmp.distance = distance - rhs.distance;
     return tmp;
 }
 
-Runtime Runtime::operator *(const Runtime& rhs)const{
+Runtime Runtime::operator *(const double& rhs)const{
     Runtime tmp;
     tmp.rtime = rtime * rhs;
     tmp.distance = distance * rhs;
     return tmp;
 }
-Runtime Runtime::operator /(const Runtime& rhs)const{
+Runtime Runtime::operator /(const double& rhs)const{
     Runtime tmp;
     tmp.rtime = rtime / rhs;
     tmp.distance = distance / rhs;
     return tmp;
 }
 
-bool Runtime::operator ==(const Runtime& rhs)const{
-    return rtime == rhs.time && distance == rhs.distance;
+bool Runtime::operator == (const Runtime& rhs)const{
+    if(rtime == rhs.rtime && distance == rhs.distance){
+        return true;
+    }
+    else{
+        return false;
+    }
 }
 
-bool operator != (const Runtime& rhs)const{
-    return rtime != rhs.time && distance != rhs.distance;
-}
-bool distance_equal(double d) const{
-    if(distance == rhs.distance){
+bool Runtime::operator != (const Runtime& rhs)const{
+    if(rtime == rhs.rtime && distance == rhs.distance){
+        return false;
+    }
+    else{
         return true;
     }
 }
-void input(std::istream& ins){
-    int num;
-while (ins.peek() == '\n'){
-    ins.ignore();
+bool Runtime::distance_equal(double d) const{
+    if(distance == d){
+        return true;
     }
-ins >> num;
-while (!ins.eof()){
-    insert(num);
-    ins >> num;
+    else {
+        return false;
+    }
+    
+}
+void Runtime::input(std::istream& ins){
+    ins >> rtime;
+    ins >> distance;
+}
+
+void Runtime::output(std::ostream& outs)const{
+   outs << rtime;
+   outs << distance;
+}
+
+std::ostream& operator <<(std::ostream& outs, const Runtime& t1){
+t1.output(outs);
+return outs;
 } 
-}
+			
 
-void output(std::ostream& outs)const{
-    for(size_t i = 0; i < used; i++){
-    outs << data[i] << endl;
-    }
+std::istream& operator >>(std::istream& ins, Runtime& t1){
+t1.input(ins);
+return ins;
 }
-
-Runtime operator *(const double& lhs, const Runtime& rhs){
-    Runtime tmp;
-    tmp.rtime = rhs * rtime;
-    tmp.distance = rhs * distance;
-    return tmp;
-}
+				
