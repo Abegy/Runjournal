@@ -19,14 +19,14 @@ void RunJournal::record(Runtime tmp){
 }
 void RunJournal::display(){
      for(int i = 0; i < used; ++i){
-      cout << "Run " << i + 1 << " | Time: " << data[i] << endl;
+      cout << "Run " << i + 1 << " | Time: " << data[i].get_time() << " " << data[i].get_distance() << endl;
      }
 
 }
 
 void RunJournal::find_remove(Runtime tmp){
     double totaltime = 0;
-    double pace = totaltime / tmp.get_distance();
+    double pace = (totaltime / tmp.get_distance());
     char choice;
 
    for(int i = 0; i < used; i++){
@@ -45,9 +45,7 @@ void RunJournal::find_remove(Runtime tmp){
              }
         }
     }
-       else{
-           cout << "No run at this time" << endl;
-          }
+    
   } 
 
 }
